@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
        ui->lineEdit_f->setValidator(const_all);
        ui->lineEdit_i->setValidator(const_all);
 
-       QRegExp Const_f ("^[А-Яа-я]+[0-9]+$");
+       QRegExp Const_f ("^[0-9]+$");
        QRegExpValidator *const_find = new QRegExpValidator(Const_v, this);
        ui->lineEdit_find->setValidator(const_find);
 
@@ -335,7 +335,8 @@ void MainWindow::on_action_3_triggered()
 
     if(my_file=="Новый проект"){
          QString filename = QFileDialog::getSaveFileName(this, tr("Сохранить как"), QDir::currentPath(), tr("File (*.txt)") );
-         if(!filename.isEmpty()){my_file=filename;}
+         if(!filename.isEmpty()){
+             my_file=filename;}
     }
     else{
    QStringList save_project;
