@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
        ui->lineEdit_f->setValidator(const_all);
        ui->lineEdit_i->setValidator(const_all);
 
-       QRegExp Const_f ("^[0-9]+$");
-       QRegExpValidator *const_find = new QRegExpValidator(Const_v, this);
+       QRegExp Const_f ("^[А-Яа-я0-9]+$");
+       QRegExpValidator *const_find = new QRegExpValidator(Const_f, this);
        ui->lineEdit_find->setValidator(const_find);
 
        QRegExp Const_dd ("^[0-9]+$");
