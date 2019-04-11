@@ -214,7 +214,7 @@ void MainWindow::on_pushButton_find_clicked()
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
         n--;
-        if(!(ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_name()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_surname()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_direction()||ui->lineEdit_find->text()+"\r\n"==QString::number(my_pupil[i].return_age()))){
+        if(!(ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_name()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_surname()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_direction()||ui->lineEdit_find->text().toInt()==my_pupil[i].return_age())){
            ui->tableWidget->hideRow(i);
            n++;
         }
