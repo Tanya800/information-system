@@ -30,12 +30,3 @@ QString Pupil::return_direction(){
 int Pupil::return_age(){
     return age;
 }
-int Pupil::count=0;
-
-void Pupil::set_count(int new_count){
-    count =new_count;
-}
-int Pupil::return_count(){
-    return count;
-}
-

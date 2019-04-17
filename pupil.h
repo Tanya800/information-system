@@ -17,11 +17,8 @@ public :
     QString return_surname();
     QString return_direction();
     int return_age();
-    static void set_count(int);
-    static int return_count();
 
 private:
-    static int count;
        QString name;
        QString surname;
        QString direction;

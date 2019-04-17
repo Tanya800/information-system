@@ -46,7 +46,6 @@
   <property name="styleSheet">
    <string notr="true">border-color: rgb(0, 0, 0);
 font: 9pt &quot;MS Shell Dlg 2&quot;;
-
 </string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -112,6 +111,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
        </property>
        <property name="toolTipDuration">
         <number>-1</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <item>
         <property name="text">

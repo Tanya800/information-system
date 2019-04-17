@@ -125,6 +125,8 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+
+
     ui->label_table->setText("Отображение всей информации");
     ui->tableWidget->setRowCount(0);
 
@@ -213,15 +215,15 @@ void MainWindow::on_pushButton_find_clicked()
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,1,Item2);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
-        n--;
+
         if(!(ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_name()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_surname()||ui->lineEdit_find->text()+"\r\n"==my_pupil[i].return_direction()||ui->lineEdit_find->text().toInt()==my_pupil[i].return_age())){
            ui->tableWidget->hideRow(i);
-           n++;
+           n--;
         }
 
     }
     clear_lineEdit();
-    if(n==my_pupil.size()) {
+    if(n==0) {
         ui->statusBar->showMessage("Ученик не найден.Попробуйте снова.",3000);
         on_pushButton_2_clicked();
         }
@@ -232,10 +234,6 @@ void MainWindow::on_pushButton_find_clicked()
 
 void MainWindow::on_pushButton_edit_clicked()
 {
-
-   // QStringList strList;
-
-    //поиск определенной строки
     if(!(ui->lineEdit_edit->text().isEmpty())){
     if(! my_pupil.isEmpty()){
     on_pushButton_edit_2_clicked();

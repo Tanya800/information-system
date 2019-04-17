@@ -51,7 +51,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QMenu *fileMenu;
 
 };
 
