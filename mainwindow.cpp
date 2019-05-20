@@ -378,7 +378,13 @@ void MainWindow::on_action_3_triggered()
        save_project<<my_pupil[i].return_name().toUtf8();
        save_project<<my_pupil[i].return_direction().toUtf8();
        save_project<<QString::number(my_pupil[i].return_age())<<"\r\n";
+       save_project<<my_pupil[i].return_gender().toUtf8();
    }
+  for (int i =0;i<save_project.size();i++){
+      for(int j=0;j<save_project[i].size();j++){
+          save_project[i][j].unicode()+=6;
+      }
+  }
    QFile file(my_file);
    if (file.open(QIODevice::WriteOnly)){
            QTextStream stream(&file);
@@ -411,11 +417,20 @@ void MainWindow::on_action_5_triggered()
 
     }
      file.close();
+     QVector <int> count_p;
+     for (int i =0;i<open_project.size();i++){
+         for(int j=0;j<open_project[i].size();j++){
+             open_project[i][j].unicode()-=6;
+             if(open_project[i][j]=='\n') count_p.push_back(j);
+         }
+     }
+      int pos=0;
+      for(int i=0;i<open_project.size();i++){
 
-     for(int i=0;i<open_project.size();i+=4){
         Pupil temp;
-        //temp.set_data(open_project[i],open_project[i+1],open_project[i+2],open_project[i+3].toInt());
+        temp.set_data(open_project[i].mid(pos,count_p[pos]),open_project[i].mid(count_p[pos]+1,count_p[pos+1]-count_p[pos]),open_project[i].mid(count_p[pos+1]+1,count_p[pos+2]-count_p[pos+1]),open_project[i].mid(count_p[pos+2]+1,count_p[pos+3]-count_p[pos+2]).toInt(),open_project[i].mid(count_p[pos+3]+1,count_p[pos+3]-count_p[pos+2]));
         my_pupil.push_back(temp);
+        pos+=4;
      }
      clear_lineEdit();
      on_pushButton_2_clicked();
