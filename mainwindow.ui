@@ -6,21 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1078</width>
-    <height>564</height>
+    <width>1237</width>
+    <height>553</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1078</width>
-    <height>564</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1078</width>
-    <height>564</height>
-   </size>
   </property>
   <property name="font">
    <font>
@@ -52,7 +40,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>970</x>
       <y>10</y>
       <width>257</width>
       <height>431</height>
@@ -159,6 +147,61 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       <widget class="QLineEdit" name="lineEdit_age"/>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Пол:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_m">
+         <property name="minimumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>М</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_w">
+         <property name="minimumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Ж</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Добавить</string>
@@ -174,35 +217,25 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
      </item>
     </layout>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_find">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>98</y>
-      <width>221</width>
-      <height>51</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
-      <width>221</width>
-      <height>51</height>
+      <y>40</y>
+      <width>291</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите данные ученика,&lt;/p&gt;&lt;p&gt;которого требуется найти:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Введите данные для поиска:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
-      <width>211</width>
+      <y>306</y>
+      <width>301</width>
       <height>51</height>
      </rect>
     </property>
@@ -214,8 +247,8 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
     <property name="geometry">
      <rect>
       <x>9</x>
-      <y>291</y>
-      <width>221</width>
+      <y>357</y>
+      <width>301</width>
       <height>51</height>
      </rect>
     </property>
@@ -223,9 +256,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>151</y>
-      <width>221</width>
+      <x>10</x>
+      <y>240</y>
+      <width>301</width>
       <height>51</height>
      </rect>
     </property>
@@ -256,8 +289,8 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>354</y>
-      <width>221</width>
+      <y>420</y>
+      <width>301</width>
       <height>41</height>
      </rect>
     </property>
@@ -281,9 +314,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>310</x>
       <y>20</y>
-      <width>531</width>
+      <width>661</width>
       <height>431</height>
      </rect>
     </property>
@@ -385,11 +418,26 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       <set>AlignCenter</set>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>Пол</string>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>400</x>
       <y>460</y>
       <width>531</width>
       <height>31</height>
@@ -428,7 +476,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
    <widget class="QLabel" name="label_table">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>400</x>
       <y>0</y>
       <width>531</width>
       <height>21</height>
@@ -453,13 +501,200 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>301</width>
+      <height>156</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Фамилия:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_f_2"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Имя:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_i_find"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="minimumSize">
+          <size>
+           <width>101</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Направление:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_find">
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
+         </property>
+         <property name="toolTipDuration">
+          <number>-1</number>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Хор</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Фортепьяно</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Сольфеджио</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Игра на гитаре</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Вокал</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Возраст:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_age_find"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Пол:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_m_find">
+         <property name="minimumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>М</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_w_find">
+         <property name="minimumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>95</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Ж</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1078</width>
+     <width>1237</width>
      <height>24</height>
     </rect>
    </property>
