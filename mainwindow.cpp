@@ -76,9 +76,9 @@ void MainWindow::on_pushButton_clicked()
     ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(0,1,ui->lineEdit_i->text().front().toUpper()));
     ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(1,ui->lineEdit_i->text().size()-1,ui->lineEdit_i->text().mid(1,ui->lineEdit_i->text().size()-1).toLower()));
     if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
-        if(ui->radioButton_m->isChecked()){    new_people.set_data(ui->lineEdit_f->text()+"\r\n",ui->lineEdit_i->text()+"\r\n",ui->comboBox->currentText()+"\r\n",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text()+"\r\n");}
+        if(ui->radioButton_m->isChecked()){    new_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
         else {
-               new_people.set_data(ui->lineEdit_f->text()+"\r\n",ui->lineEdit_i->text()+"\r\n",ui->comboBox->currentText()+"\r\n",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text()+"\r\n");
+               new_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
         }
     my_pupil.push_back(new_people);
 
@@ -119,9 +119,9 @@ void MainWindow::on_pushButton_clicked()
         ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(1,ui->lineEdit_i->text().size()-1,ui->lineEdit_i->text().mid(1,ui->lineEdit_i->text().size()-1).toLower()));
 
         if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
-            if(ui->radioButton_m->isChecked()){    edit_people.set_data(ui->lineEdit_f->text()+"\r\n",ui->lineEdit_i->text()+"\r\n",ui->comboBox->currentText()+"\r\n",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text()+"\r\n");}
+            if(ui->radioButton_m->isChecked()){    edit_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
             else {
-                   edit_people.set_data(ui->lineEdit_f->text()+"\r\n",ui->lineEdit_i->text()+"\r\n",ui->comboBox->currentText()+"\r\n",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text()+"\r\n");
+                   edit_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
             }
 
         my_pupil[choice]=edit_people;
@@ -241,7 +241,7 @@ void MainWindow::on_pushButton_find_clicked()
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,4,Item5);
-       if(!(ui->lineEdit_i_find->text()+"\r\n"==my_pupil[i].return_name()||ui->lineEdit_f_2->text()+"\r\n"==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed())){
+       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed())){
            ui->tableWidget->hideRow(i);
            n--;
         }
@@ -278,8 +278,8 @@ void MainWindow::on_pushButton_edit_clicked()
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,3)->setBackground(Qt::green);
         ui->lineEdit_age->setText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,3)->text().trimmed());
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,4)->setBackground(Qt::green);
-        if (ui->radioButton_m->text()==ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,4)->text().trimmed()) {ui->radioButton_m->setChecked(true),ui->radioButton_w->setChecked(false);}
-        else {ui->radioButton_w->setChecked(true),ui->radioButton_m->setChecked(false);}
+        if (ui->radioButton_m->text()==ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,4)->text().trimmed()) {ui->radioButton_m->setChecked(true);ui->radioButton_w->setChecked(false);}
+        else { ui->radioButton_w->setChecked(true);ui->radioButton_m->setChecked(false);}
         choice=ui->lineEdit_edit->text().toInt()-1;
         }
 
@@ -374,12 +374,14 @@ void MainWindow::on_action_3_triggered()
     }
    QStringList save_project;
    for(int i=0;i<my_pupil.size();i++){
-       save_project<<my_pupil[i].return_surname().toUtf8();
-       save_project<<my_pupil[i].return_name().toUtf8();
-       save_project<<my_pupil[i].return_direction().toUtf8();
-       save_project<<QString::number(my_pupil[i].return_age())<<"\r\n";
-       save_project<<my_pupil[i].return_gender().toUtf8();
+       save_project.push_back(my_pupil[i].return_surname().toUtf8()+";");
+       save_project.push_back(my_pupil[i].return_name().toUtf8()+";");
+       save_project.push_back(my_pupil[i].return_direction().toUtf8()+";");
+       save_project.push_back(QString::number(my_pupil[i].return_age())+";");
+       save_project.push_back(my_pupil[i].return_gender().toUtf8()+";");
+
    }
+    QMessageBox::information(this,"Результат",QString::number(save_project.size()),"ОК");
   for (int i =0;i<save_project.size();i++){
       for(int j=0;j<save_project[i].size();j++){
           save_project[i][j].unicode()+=6;
@@ -412,29 +414,34 @@ void MainWindow::on_action_5_triggered()
 
        while(!file.atEnd())
        {
-         open_project<<file.readLine( ) ;
+          open_project<< file.readAll();
+
         }
 
     }
      file.close();
-     QVector <int> count_p;
+int f=0;
      for (int i =0;i<open_project.size();i++){
          for(int j=0;j<open_project[i].size();j++){
              open_project[i][j].unicode()-=6;
-             if(open_project[i][j]=='\n') count_p.push_back(j);
+if(open_project[i][j]==";") f++;
          }
      }
-      int pos=0;
-      for(int i=0;i<open_project.size();i++){
 
-        Pupil temp;
-        temp.set_data(open_project[i].mid(pos,count_p[pos]),open_project[i].mid(count_p[pos]+1,count_p[pos+1]-count_p[pos]),open_project[i].mid(count_p[pos+1]+1,count_p[pos+2]-count_p[pos+1]),open_project[i].mid(count_p[pos+2]+1,count_p[pos+3]-count_p[pos+2]).toInt(),open_project[i].mid(count_p[pos+3]+1,count_p[pos+3]-count_p[pos+2]));
-        my_pupil.push_back(temp);
-        pos+=4;
-     }
-     clear_lineEdit();
-     on_pushButton_2_clicked();
-     show_my_project();
+     QMessageBox::information(this,"Результат",QString::number(open_project.size()),"ОК");
+ QMessageBox::information(this,"Результат",open_project[0],"ОК");
+         for(int i=0;i<f;i+=5){
+
+           Pupil temp;
+           temp.set_data(open_project[0].section(";",i,i),open_project[0].section(";",i+1,i+1),open_project[0].section(";",i+2,i+2),open_project[0].section(";",i+3,i+3).toInt(),open_project[0].section(";",i+4,i+4));
+           my_pupil.push_back(temp);
+
+        }
+        clear_lineEdit();
+        on_pushButton_2_clicked();
+        show_my_project();
+
+
    }
 
 }
