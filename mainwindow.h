@@ -49,6 +49,13 @@ private slots:
 
     void clear_lineEdit();
 
+
+
+
+    void on_pushButton_add_clicked();
+
+    void on_pushButton_add_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 

@@ -9,7 +9,8 @@
 #include<iostream>
 #include <QTextCodec>
 #include<QMessageBox>
-
+#include <ActiveQt/qaxobject.h>
+#include <ActiveQt/qaxbase.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,21 +21,23 @@ MainWindow::MainWindow(QWidget *parent) :
        QRegExp ipRegex ("^[1-9]{1}[0-9]{1}$");
        QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
        ui->lineEdit_age->setValidator(ipValidator);
+       ui->lineEdit_age_find->setValidator(ipValidator);
 
        QRegExp Const_v ("^[А-Яа-я]{,50}$");
        QRegExpValidator *const_all = new QRegExpValidator(Const_v, this);
        ui->lineEdit_f->setValidator(const_all);
        ui->lineEdit_i->setValidator(const_all);
-
-       QRegExp Const_f ("^[А-Яа-я0-9]+$");
-       QRegExpValidator *const_find = new QRegExpValidator(Const_f, this);
-     //  ui->lineEdit_find->setValidator(const_find);
+       ui->lineEdit_f_2->setValidator(const_all);
+       ui->lineEdit_i_find->setValidator(const_all);
 
        QRegExp Const_dd ("^[0-9]+$");
        QRegExpValidator *const_delete = new QRegExpValidator(Const_dd, this);
        ui->lineEdit_delete->setValidator(const_delete);
        ui->lineEdit_edit->setValidator(const_delete);
        show_my_project();
+       ui->comboBox_add2->hide();
+       ui->comboBox_add3->hide();
+       ui->pushButton_add_2->hide();
 }
 
 MainWindow::~MainWindow()
@@ -75,10 +78,29 @@ void MainWindow::on_pushButton_clicked()
     ui->lineEdit_f->setText(ui->lineEdit_f->text().replace(1,ui->lineEdit_f->text().size()-1,ui->lineEdit_f->text().mid(1,ui->lineEdit_f->text().size()-1).toLower()));
     ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(0,1,ui->lineEdit_i->text().front().toUpper()));
     ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(1,ui->lineEdit_i->text().size()-1,ui->lineEdit_i->text().mid(1,ui->lineEdit_i->text().size()-1).toLower()));
+
+    if(ui->comboBox_add2->isHidden()==true){
+
     if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
+
         if(ui->radioButton_m->isChecked()){    new_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
         else {
                new_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+        }
+    }else  ui->statusBar->showMessage("Выберите пол",1500);}
+
+    else if (ui->comboBox_add2->isHidden()==false&&ui->comboBox_add3->isHidden()==true){
+        if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
+            if(ui->radioButton_m->isChecked()){    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
+            else {
+                   new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+            }}else  ui->statusBar->showMessage("Выберите пол",1500);
+    }
+    else {
+            if(ui->radioButton_m->isChecked()){    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
+            else {
+                   new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+            }
         }
     my_pupil.push_back(new_people);
 
@@ -86,8 +108,15 @@ void MainWindow::on_pushButton_clicked()
 
     Item2->setText(my_pupil.back().return_name().trimmed());
 
-    Item3->setText( my_pupil.back().return_direction().trimmed());
-
+    if (my_pupil.back().return_direction_2().isEmpty()){
+         Item3->setText( my_pupil.back().return_direction().trimmed());
+    }
+    else if (my_pupil.back().return_direction_3().isEmpty()){
+        Item3->setText( my_pupil.back().return_direction().trimmed()+";\n"+my_pupil.back().return_direction_2());
+    }
+    else {
+        Item3->setText( my_pupil.back().return_direction().trimmed()+";\n"+my_pupil.back().return_direction_2()+";\n"+my_pupil.back().return_direction_3());
+    }
     Item4->setText(QString::number( my_pupil.back().return_age() ));
 
     Item5->setText( my_pupil.back().return_gender().trimmed());
@@ -101,7 +130,9 @@ void MainWindow::on_pushButton_clicked()
     ui->lineEdit_f->clear();
     ui->lineEdit_i->clear();
     ui->lineEdit_age->clear();
-    }else  ui->statusBar->showMessage("Выберите пол",1500);
+    ui->comboBox_add2->hide();
+    ui->comboBox_add3->hide();
+    ui->pushButton_add_2->hide();
     }else {
          ui->statusBar->showMessage("Заполните все поля",1500);
     }
@@ -117,11 +148,28 @@ void MainWindow::on_pushButton_clicked()
         ui->lineEdit_f->setText(ui->lineEdit_f->text().replace(1,ui->lineEdit_f->text().size()-1,ui->lineEdit_f->text().mid(1,ui->lineEdit_f->text().size()-1).toLower()));
         ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(0,1,ui->lineEdit_i->text().front().toUpper()));
         ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(1,ui->lineEdit_i->text().size()-1,ui->lineEdit_i->text().mid(1,ui->lineEdit_i->text().size()-1).toLower()));
+        if(ui->comboBox_add2->isHidden()==true){
 
         if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
+
             if(ui->radioButton_m->isChecked()){    edit_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
             else {
                    edit_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+            }
+        }else  ui->statusBar->showMessage("Выберите пол",1500);}
+
+        else if (ui->comboBox_add2->isHidden()==false&&ui->comboBox_add3->isHidden()==true){
+            if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
+                if(ui->radioButton_m->isChecked()){    edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
+                else {
+                       edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+                }}else  ui->statusBar->showMessage("Выберите пол",1500);
+        }
+        else {
+                if(ui->radioButton_m->isChecked()){    edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
+                else {
+                       edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+                }
             }
 
         my_pupil[choice]=edit_people;
@@ -131,8 +179,11 @@ void MainWindow::on_pushButton_clicked()
         ui->lineEdit_age->clear();
         on_pushButton_2_clicked();
         clear_lineEdit();
-        }else  ui->statusBar->showMessage("Выберите пол",1500);
-        }else {
+        ui->comboBox_add2->hide();
+        ui->comboBox_add3->hide();
+        ui->pushButton_add_2->hide();
+        }
+        else {
             ui->statusBar->showMessage("Заполните все поля",3000);
             }
     }
@@ -161,7 +212,12 @@ void MainWindow::on_pushButton_2_clicked()
         Item5->setTextAlignment(Qt::AlignCenter);
         Item1->setText(my_pupil[i].return_surname().toUtf8().trimmed());
         Item2->setText(my_pupil[i].return_name().toUtf8().trimmed());
-        Item3->setText(my_pupil[i].return_direction().trimmed());
+        if(my_pupil[i].return_direction_2().isEmpty()){
+        Item3->setText(my_pupil[i].return_direction().trimmed());}
+        else if (my_pupil[i].return_direction_3().isEmpty()){
+            Item3->setText(my_pupil[i].return_direction().trimmed()+";\n"+my_pupil[i].return_direction_2());
+        }
+        else{ Item3->setText(my_pupil[i].return_direction().trimmed()+";\n"+my_pupil[i].return_direction_2()+";\n"+my_pupil[i].return_direction_3());}
         Item4->setText(QString::number(my_pupil[i].return_age()).trimmed());
         Item5->setText(my_pupil[i].return_gender().toUtf8().trimmed());
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
@@ -204,7 +260,7 @@ void MainWindow::on_pushButton_help_clicked()
 
 void MainWindow::on_pushButton_help_find_clicked()
 {
-     ui->statusBar->showMessage("Введите в полz данные об ученике,которого вы хотите найти.",3000);
+     ui->statusBar->showMessage("Введите в поля данные об ученике,которого вы хотите найти.",3000);
 }
 
 void MainWindow::on_pushButton_find_clicked()
@@ -212,7 +268,7 @@ void MainWindow::on_pushButton_find_clicked()
 
     QStringList str;
     int n=my_pupil.size();
-    if(!(ui->lineEdit_i_find->text().isEmpty())||!ui->lineEdit_f_2->text().isEmpty()||!ui->lineEdit_age_find->text().isEmpty()||ui->radioButton_m_find->isChecked()||ui->radioButton_w_find->isChecked()||ui->comboBox_find->currentIndex()!=0){
+    if(!(ui->lineEdit_i_find->text().isEmpty())||!ui->lineEdit_f_2->text().isEmpty()||!ui->lineEdit_age_find->text().isEmpty()||ui->comboBox_find_2->currentIndex()!=0||ui->comboBox_find->currentIndex()!=0){
         ui->lineEdit_i_find->setText( ui->lineEdit_i_find->text().replace(0,1,ui->lineEdit_i_find->text().front().toUpper()));
         ui->lineEdit_i_find->setText(ui->lineEdit_i_find->text().replace(1,ui->lineEdit_i_find->text().size()-1,ui->lineEdit_i_find->text().mid(1,ui->lineEdit_i_find->text().size()-1).toLower()));
         ui->lineEdit_f_2->setText( ui->lineEdit_f_2->text().replace(0,1,ui->lineEdit_f_2->text().front().toUpper()));
@@ -241,7 +297,7 @@ void MainWindow::on_pushButton_find_clicked()
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,4,Item5);
-       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed())){
+       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed()||ui->comboBox_find_2->currentText()==my_pupil[i].return_gender())){
            ui->tableWidget->hideRow(i);
            n--;
         }
@@ -249,9 +305,8 @@ void MainWindow::on_pushButton_find_clicked()
     }
     clear_lineEdit();
     ui->comboBox_find->setCurrentIndex(0);
-    ui->radioButton_m_find->setChecked(false);
-    ui->radioButton_w_find->setDown(false);
-    ui->radioButton_w_find->setChecked(false);
+    ui->comboBox_find_2->setCurrentIndex(0);
+
     if(n==0) {
         ui->statusBar->showMessage("Ученик не найден.Попробуйте снова.",3000);
         on_pushButton_2_clicked();
@@ -267,14 +322,29 @@ void MainWindow::on_pushButton_edit_clicked()
     if(!(ui->lineEdit_edit->text().isEmpty())){
     if(! my_pupil.isEmpty()){
     on_pushButton_edit_2_clicked();
-        if(ui->lineEdit_edit->text().toInt()-1<=my_pupil.size()&&ui->lineEdit_edit->text().toInt()-1>=0){
+        if(ui->lineEdit_edit->text().toInt()-1<=my_pupil.size()&&ui->lineEdit_edit->text().toInt()>0){
         ui->statusBar->showMessage("Ученик найден. Заполните поля:Фамиля,Имя,Возраст,Направление и нажмите кнопку \"Добавить\".",3000);
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,0)->setBackground(Qt::green);
         ui->lineEdit_f->setText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,0)->text().trimmed());
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,1)->setBackground(Qt::green);
         ui->lineEdit_i->setText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,1)->text().trimmed());
+
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,2)->setBackground(Qt::green);
-        ui->comboBox->setCurrentText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,2)->text().trimmed());
+        ui->comboBox->setCurrentText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,2)->text().section(";",0,0).trimmed());
+        if(!my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_2().isEmpty()&&my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_3().isEmpty()){
+            ui->comboBox_add2->show();
+            ui->pushButton_add->hide();
+            ui->pushButton_add_2->show();
+            ui->comboBox_add2->setCurrentText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,2)->text().section(";",1,1).trimmed());
+        }
+        else if (!my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_2().isEmpty()&&!my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_3().isEmpty()){
+            ui->pushButton_add->hide();
+            ui->pushButton_add_2->hide();
+            ui->comboBox_add2->show();
+            ui->comboBox_add3->show();
+             ui->comboBox_add2->setCurrentText(my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_2().trimmed());
+             ui->comboBox_add3->setCurrentText(my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_3().trimmed());
+        }
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,3)->setBackground(Qt::green);
         ui->lineEdit_age->setText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,3)->text().trimmed());
         ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,4)->setBackground(Qt::green);
@@ -381,7 +451,7 @@ void MainWindow::on_action_3_triggered()
        save_project.push_back(my_pupil[i].return_gender().toUtf8()+";");
 
    }
-    QMessageBox::information(this,"Результат",QString::number(save_project.size()),"ОК");
+
   for (int i =0;i<save_project.size();i++){
       for(int j=0;j<save_project[i].size();j++){
           save_project[i][j].unicode()+=6;
@@ -428,8 +498,7 @@ if(open_project[i][j]==";") f++;
          }
      }
 
-     QMessageBox::information(this,"Результат",QString::number(open_project.size()),"ОК");
- QMessageBox::information(this,"Результат",open_project[0],"ОК");
+
          for(int i=0;i<f;i+=5){
 
            Pupil temp;
@@ -462,6 +531,19 @@ void MainWindow::clear_lineEdit(){
     ui->lineEdit_age_find->clear();
     ui->lineEdit_i_find->clear();
     ui->lineEdit_f_2->clear();
-    ui->radioButton_m_find->setChecked(false);
-    ui->radioButton_w_find->setChecked(false);
+
+}
+
+
+void MainWindow::on_pushButton_add_clicked()
+{
+    ui->pushButton_add->hide();
+    ui->comboBox_add2->show();
+    ui->pushButton_add_2->show();
+}
+
+void MainWindow::on_pushButton_add_2_clicked()
+{
+    ui->pushButton_add_2->hide();
+    ui->comboBox_add3->show();
 }

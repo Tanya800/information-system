@@ -10,6 +10,12 @@
     <height>553</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>16</horstretch>
+    <verstretch>21</verstretch>
+   </sizepolicy>
+  </property>
   <property name="font">
    <font>
     <family>MS Shell Dlg 2</family>
@@ -43,7 +49,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       <x>970</x>
       <y>10</y>
       <width>257</width>
-      <height>431</height>
+      <height>450</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -202,6 +208,84 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       </layout>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButton_add">
+       <property name="text">
+        <string>Добавить занятие</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_add2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Хор</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Фортепьяно</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Сольфеджио</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Игра на гитаре</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Вокал</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_add_2">
+       <property name="text">
+        <string>Добавить занятие</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_add3">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Хор</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Фортепьяно</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Сольфеджио</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Игра на гитаре</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Вокал</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Добавить</string>
@@ -350,12 +434,36 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
     <property name="frameShadow">
      <enum>QFrame::Sunken</enum>
     </property>
+    <property name="autoScrollMargin">
+     <number>24</number>
+    </property>
     <property name="alternatingRowColors">
      <bool>false</bool>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
     </property>
     <property name="textElideMode">
      <enum>Qt::ElideMiddle</enum>
     </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>128</number>
+    </attribute>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>55</number>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>38</number>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>34</number>
+    </attribute>
     <column>
      <property name="text">
       <string>Фамилия </string>
@@ -501,13 +609,13 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>80</y>
       <width>301</width>
-      <height>156</height>
+      <height>160</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -647,41 +755,31 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_m_find">
-         <property name="minimumSize">
-          <size>
-           <width>95</width>
-           <height>20</height>
-          </size>
+        <widget class="QComboBox" name="comboBox_find_2">
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>95</width>
-           <height>20</height>
-          </size>
+         <property name="toolTipDuration">
+          <number>-1</number>
          </property>
-         <property name="text">
-          <string>М</string>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_w_find">
-         <property name="minimumSize">
-          <size>
-           <width>95</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>95</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Ж</string>
-         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>М</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ж</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -706,6 +804,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
     <addaction name="action_3"/>
     <addaction name="action_4"/>
     <addaction name="action_5"/>
+    <addaction name="action_Excel"/>
     <addaction name="separator"/>
     <addaction name="action_6"/>
    </widget>
@@ -759,6 +858,11 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
   <action name="action_6">
    <property name="text">
     <string>Выход</string>
+   </property>
+  </action>
+  <action name="action_Excel">
+   <property name="text">
+    <string>Открыть в Excel</string>
    </property>
   </action>
  </widget>
