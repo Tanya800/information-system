@@ -8,6 +8,9 @@
 #include<QVector>
 #include<iostream>
 #include <QTextCodec>
+#include <ActiveQt/qaxobject.h>
+#include <ActiveQt/qaxbase.h>
+#include <QtGui>
 #include<QMessageBox>
 #include <ActiveQt/qaxobject.h>
 #include <ActiveQt/qaxbase.h>
@@ -15,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
        QRegExp ipRegex ("^[1-9]{1}[0-9]{1}$");
@@ -35,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
        ui->lineEdit_delete->setValidator(const_delete);
        ui->lineEdit_edit->setValidator(const_delete);
        show_my_project();
+
        ui->comboBox_add2->hide();
        ui->comboBox_add3->hide();
        ui->pushButton_add_2->hide();
@@ -81,6 +84,7 @@ void MainWindow::on_pushButton_clicked()
 
     if(ui->comboBox_add2->isHidden()==true){
 
+
     if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
 
         if(ui->radioButton_m->isChecked()){    new_people.set_data(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
@@ -89,19 +93,29 @@ void MainWindow::on_pushButton_clicked()
         }
     }else  ui->statusBar->showMessage("Выберите пол",1500);}
 
+
     else if (ui->comboBox_add2->isHidden()==false&&ui->comboBox_add3->isHidden()==true){
+
+
         if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
             if(ui->radioButton_m->isChecked()){    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
             else {
                    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
             }}else  ui->statusBar->showMessage("Выберите пол",1500);
     }
+
+
     else {
+
+
+        if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
             if(ui->radioButton_m->isChecked()){    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
             else {
                    new_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
-            }
+            }}else  ui->statusBar->showMessage("Выберите пол",1500);
         }
+
+
     my_pupil.push_back(new_people);
 
     Item1->setText(my_pupil.back().return_surname().trimmed());
@@ -127,6 +141,7 @@ void MainWindow::on_pushButton_clicked()
     ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,4,Item5);
+    ui->tableWidget->setRowHeight(ui->tableWidget->rowCount()-1,53);
     ui->lineEdit_f->clear();
     ui->lineEdit_i->clear();
     ui->lineEdit_age->clear();
@@ -187,7 +202,7 @@ void MainWindow::on_pushButton_clicked()
             ui->statusBar->showMessage("Заполните все поля",3000);
             }
     }
-
+ui->pushButton_add->show();
 
 }
 
@@ -221,6 +236,7 @@ void MainWindow::on_pushButton_2_clicked()
         Item4->setText(QString::number(my_pupil[i].return_age()).trimmed());
         Item5->setText(my_pupil[i].return_gender().toUtf8().trimmed());
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+        ui->tableWidget->setRowHeight(ui->tableWidget->rowCount()-1,53);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,0,Item1);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,1,Item2);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
@@ -288,16 +304,22 @@ void MainWindow::on_pushButton_find_clicked()
         Item5->setTextAlignment(Qt::AlignCenter);
         Item1->setText(my_pupil[i].return_surname().toUtf8().trimmed());
         Item2->setText(my_pupil[i].return_name().toUtf8().trimmed());
-        Item3->setText(my_pupil[i].return_direction().toUtf8().trimmed());
+        if(my_pupil[i].return_direction_2().isEmpty()){
+        Item3->setText(my_pupil[i].return_direction().trimmed());}
+        else if (my_pupil[i].return_direction_3().isEmpty()){
+            Item3->setText(my_pupil[i].return_direction().trimmed()+";\n"+my_pupil[i].return_direction_2());
+        }
+        else{ Item3->setText(my_pupil[i].return_direction().trimmed()+";\n"+my_pupil[i].return_direction_2()+";\n"+my_pupil[i].return_direction_3());}
         Item4->setText(QString::number(my_pupil[i].return_age()));
         Item5->setText(my_pupil[i].return_gender().toUtf8().trimmed());
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+        ui->tableWidget->setRowHeight(ui->tableWidget->rowCount()-1,53);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,0,Item1);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,1,Item2);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,4,Item5);
-       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed()||ui->comboBox_find_2->currentText()==my_pupil[i].return_gender())){
+       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction_2()||ui->comboBox_find->currentText()==my_pupil[i].return_direction_3()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed()||ui->comboBox_find_2->currentText()==my_pupil[i].return_gender())){
            ui->tableWidget->hideRow(i);
            n--;
         }
@@ -376,6 +398,10 @@ void MainWindow::on_pushButton_edit_2_clicked()
                ui->lineEdit_f->clear();
                ui->lineEdit_i->clear();
                ui->lineEdit_age->clear();
+               ui->comboBox_add3->hide();
+               ui->comboBox_add2->hide();
+               ui->pushButton_add_2->hide();
+               ui->pushButton_add->show();
                choice=-1;
            }
     }
@@ -415,7 +441,9 @@ void MainWindow::on_action_4_triggered()
         for(int i=0;i<my_pupil.size();i++){
             save_project<<my_pupil[i].return_surname().toUtf8();
             save_project<<my_pupil[i].return_name().toUtf8();
-            save_project<<my_pupil[i].return_direction().toUtf8();
+            save_project<<my_pupil[i].return_direction().toUtf8()<<";";
+            save_project<<my_pupil[i].return_direction_2()<<";";
+            save_project<<my_pupil[i].return_direction_3()<<";";
             save_project<<QString::number(my_pupil[i].return_age())<<"\r\n";
         }
         QFile file(my_file);
@@ -447,6 +475,8 @@ void MainWindow::on_action_3_triggered()
        save_project.push_back(my_pupil[i].return_surname().toUtf8()+";");
        save_project.push_back(my_pupil[i].return_name().toUtf8()+";");
        save_project.push_back(my_pupil[i].return_direction().toUtf8()+";");
+       save_project.push_back(my_pupil[i].return_direction_2().toUtf8()+";");
+       save_project.push_back(my_pupil[i].return_direction_3().toUtf8()+";");
        save_project.push_back(QString::number(my_pupil[i].return_age())+";");
        save_project.push_back(my_pupil[i].return_gender().toUtf8()+";");
 
@@ -499,10 +529,10 @@ if(open_project[i][j]==";") f++;
      }
 
 
-         for(int i=0;i<f;i+=5){
+         for(int i=0;i<f;i+=7){
 
            Pupil temp;
-           temp.set_data(open_project[0].section(";",i,i),open_project[0].section(";",i+1,i+1),open_project[0].section(";",i+2,i+2),open_project[0].section(";",i+3,i+3).toInt(),open_project[0].section(";",i+4,i+4));
+           temp.set(open_project[0].section(";",i,i),open_project[0].section(";",i+1,i+1),open_project[0].section(";",i+2,i+2),open_project[0].section(";",i+3,i+3),open_project[0].section(";",i+4,i+4),open_project[0].section(";",i+5,i+5).toInt(),open_project[0].section(";",i+6,i+6));
            my_pupil.push_back(temp);
 
         }
@@ -546,4 +576,65 @@ void MainWindow::on_pushButton_add_2_clicked()
 {
     ui->pushButton_add_2->hide();
     ui->comboBox_add3->show();
+}
+
+void MainWindow::on_action_Excel_triggered()
+{
+
+     QTextCodec::setCodecForLocale(QTextCodec::codecForName("Windows-1251"));
+    QString S33="Файл сохранён по пути";
+    QString S34 = QFileDialog::getSaveFileName(this,tr("Сохранить"),QDir::currentPath(),tr("Документы Excel (*.csv);"),0,QFileDialog::DontConfirmOverwrite);
+    QString save_project;
+     if (!S34.isNull()){
+     QFile f(S34);
+     QFile::remove(S34);
+         if( f.open( (QIODevice::WriteOnly) ))
+         {
+             QTextStream stream(&f);
+             stream.setCodec("Windows-1251");
+
+
+                 for( int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c )
+                           stream<<ui->tableWidget->model()->headerData(c, Qt::Horizontal).toString();
+                          for( int r = 0; r < ui->tableWidget->verticalHeader()->count(); ++r )
+                          {
+                          stream << ui->tableWidget->model()->headerData(r-my_pupil.size()-1, Qt::Vertical).toString();
+                          for( int c =0; c < ui->tableWidget->horizontalHeader()->count(); ++c )
+                          {
+                              stream<< ui->tableWidget->model()->data(ui->tableWidget->model()->index(r, c), Qt::DisplayRole).toString()<< ";";
+                          }
+                          stream << "\n";
+                          }
+                /*  stream<<my_pupil[i].return_surname().toUtf8();
+                  stream<<my_pupil[i].return_name().toUtf8();
+                stream<<my_pupil[i].return_direction().toUtf8();
+                 if(!my_pupil[i].return_direction_2().isEmpty()){
+                  stream<<my_pupil[i].return_direction_2().toUtf8();
+                 }
+                 else if (!my_pupil[i].return_direction_3().isEmpty()){
+                  stream<<my_pupil[i].return_direction_3().toUtf8();
+                 }
+               stream<<QString::number(my_pupil[i].return_age());
+                 stream<<my_pupil[i].return_gender().toUtf8();
+
+             }*/
+
+         /*     foreach(QString s, save_project)
+             {
+                 stream<<s;
+             }*/
+
+
+         }
+    /*   S33=S33+" "+S34;
+    QMessageBox *msgBox = new QMessageBox(QMessageBox::Information,"Внимание",S33,QMessageBox::Ok);
+      msgBox->setButtonText(QMessageBox::Ok, tr("ОК"));
+      if(msgBox->exec() == QMessageBox::Ok){}}
+      else{
+         QMessageBox *msgBox = new QMessageBox(QMessageBox::Information,"Внимание","Неверно выбран файл!",QMessageBox::Ok);
+         msgBox->setButtonText(QMessageBox::Ok, tr("ОК"));
+         if(msgBox->exec() == QMessageBox::Ok){}
+*/
+     f.close();
+}
 }

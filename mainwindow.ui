@@ -16,6 +16,18 @@
     <verstretch>21</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>1237</width>
+    <height>553</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1237</width>
+    <height>553</height>
+   </size>
+  </property>
   <property name="font">
    <font>
     <family>MS Shell Dlg 2</family>
@@ -209,6 +221,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_add">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Добавить занятие</string>
        </property>
@@ -862,7 +877,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
   </action>
   <action name="action_Excel">
    <property name="text">
-    <string>Открыть в Excel</string>
+    <string>Экспорт в Excel</string>
    </property>
   </action>
  </widget>

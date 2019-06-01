@@ -56,6 +56,8 @@ private slots:
 
     void on_pushButton_add_2_clicked();
 
+    void on_action_Excel_triggered();
+
 private:
     Ui::MainWindow *ui;
 
