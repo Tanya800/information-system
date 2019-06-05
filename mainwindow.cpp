@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
        ui->lineEdit_edit->setValidator(const_delete);
        show_my_project();
 
+       ui->pushButton_delete2->hide();
+       ui->pushButton_delete3->hide();
        ui->comboBox_add2->hide();
        ui->comboBox_add3->hide();
        ui->pushButton_add_2->hide();
@@ -163,7 +165,7 @@ void MainWindow::on_pushButton_clicked()
         ui->lineEdit_f->setText(ui->lineEdit_f->text().replace(1,ui->lineEdit_f->text().size()-1,ui->lineEdit_f->text().mid(1,ui->lineEdit_f->text().size()-1).toLower()));
         ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(0,1,ui->lineEdit_i->text().front().toUpper()));
         ui->lineEdit_i->setText(ui->lineEdit_i->text().replace(1,ui->lineEdit_i->text().size()-1,ui->lineEdit_i->text().mid(1,ui->lineEdit_i->text().size()-1).toLower()));
-        if(ui->comboBox_add2->isHidden()==true){
+        if(ui->comboBox_add2->isHidden()==true&&ui->comboBox_add3->isHidden()==true){
 
         if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
 
@@ -178,6 +180,13 @@ void MainWindow::on_pushButton_clicked()
                 if(ui->radioButton_m->isChecked()){    edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
                 else {
                        edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
+                }}else  ui->statusBar->showMessage("Выберите пол",1500);
+        }
+        else if (ui->comboBox_add2->isHidden()==true&&ui->comboBox_add3->isHidden()==false){
+            if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
+                if(ui->radioButton_m->isChecked()){    edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add3->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
+                else {
+                       edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add3->currentText(),"",ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
                 }}else  ui->statusBar->showMessage("Выберите пол",1500);
         }
         else {
@@ -195,6 +204,8 @@ void MainWindow::on_pushButton_clicked()
         on_pushButton_2_clicked();
         clear_lineEdit();
         ui->comboBox_add2->hide();
+        ui->pushButton_delete2->hide();
+        ui->pushButton_delete3->hide();
         ui->comboBox_add3->hide();
         ui->pushButton_add_2->hide();
         }
@@ -227,7 +238,7 @@ void MainWindow::on_pushButton_2_clicked()
         Item5->setTextAlignment(Qt::AlignCenter);
         Item1->setText(my_pupil[i].return_surname().toUtf8().trimmed());
         Item2->setText(my_pupil[i].return_name().toUtf8().trimmed());
-        if(my_pupil[i].return_direction_2().isEmpty()){
+        if(my_pupil[i].return_direction_2().isEmpty()&&my_pupil[i].return_direction_3().isEmpty()){
         Item3->setText(my_pupil[i].return_direction().trimmed());}
         else if (my_pupil[i].return_direction_3().isEmpty()){
             Item3->setText(my_pupil[i].return_direction().trimmed()+";\n"+my_pupil[i].return_direction_2());
@@ -356,6 +367,7 @@ void MainWindow::on_pushButton_edit_clicked()
         if(!my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_2().isEmpty()&&my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_3().isEmpty()){
             ui->comboBox_add2->show();
             ui->pushButton_add->hide();
+            ui->pushButton_delete2->show();
             ui->pushButton_add_2->show();
             ui->comboBox_add2->setCurrentText(ui->tableWidget->item(ui->lineEdit_edit->text().toInt()-1,2)->text().section(";",1,1).trimmed());
         }
@@ -363,6 +375,8 @@ void MainWindow::on_pushButton_edit_clicked()
             ui->pushButton_add->hide();
             ui->pushButton_add_2->hide();
             ui->comboBox_add2->show();
+            ui->pushButton_delete2->show();
+            ui->pushButton_delete3->show();
             ui->comboBox_add3->show();
              ui->comboBox_add2->setCurrentText(my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_2().trimmed());
              ui->comboBox_add3->setCurrentText(my_pupil[ui->lineEdit_edit->text().toInt()-1].return_direction_3().trimmed());
@@ -400,6 +414,8 @@ void MainWindow::on_pushButton_edit_2_clicked()
                ui->lineEdit_age->clear();
                ui->comboBox_add3->hide();
                ui->comboBox_add2->hide();
+               ui->pushButton_delete2->hide();
+               ui->pushButton_delete3->hide();
                ui->pushButton_add_2->hide();
                ui->pushButton_add->show();
                choice=-1;
@@ -570,71 +586,62 @@ void MainWindow::on_pushButton_add_clicked()
     ui->pushButton_add->hide();
     ui->comboBox_add2->show();
     ui->pushButton_add_2->show();
+
 }
 
 void MainWindow::on_pushButton_add_2_clicked()
 {
     ui->pushButton_add_2->hide();
     ui->comboBox_add3->show();
+
 }
 
 void MainWindow::on_action_Excel_triggered()
 {
-
      QTextCodec::setCodecForLocale(QTextCodec::codecForName("Windows-1251"));
-    QString S33="Файл сохранён по пути";
-    QString S34 = QFileDialog::getSaveFileName(this,tr("Сохранить"),QDir::currentPath(),tr("Документы Excel (*.csv);"),0,QFileDialog::DontConfirmOverwrite);
+    QString file_project = QFileDialog::getSaveFileName(this,tr("Сохранить"),QDir::currentPath(),tr("Документы Excel (*.csv);"),0,QFileDialog::DontConfirmOverwrite);
     QString save_project;
-     if (!S34.isNull()){
-     QFile f(S34);
-     QFile::remove(S34);
+     if (!file_project.isNull()){
+     QFile f(file_project);
+     QFile::remove(file_project);
          if( f.open( (QIODevice::WriteOnly) ))
          {
              QTextStream stream(&f);
              stream.setCodec("Windows-1251");
 
+             QStringList strList;
+                      strList << "\" \"";
+                     for( int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c ) strList << "\""+ui->tableWidget->model()->headerData(c, Qt::Horizontal).toString()+"\"";
+                     stream << strList.join( ";" )+"\n";
 
-                 for( int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c )
-                           stream<<ui->tableWidget->model()->headerData(c, Qt::Horizontal).toString();
-                          for( int r = 0; r < ui->tableWidget->verticalHeader()->count(); ++r )
-                          {
-                          stream << ui->tableWidget->model()->headerData(r-my_pupil.size()-1, Qt::Vertical).toString();
-                          for( int c =0; c < ui->tableWidget->horizontalHeader()->count(); ++c )
-                          {
-                              stream<< ui->tableWidget->model()->data(ui->tableWidget->model()->index(r, c), Qt::DisplayRole).toString()<< ";";
-                          }
-                          stream << "\n";
-                          }
-                /*  stream<<my_pupil[i].return_surname().toUtf8();
-                  stream<<my_pupil[i].return_name().toUtf8();
-                stream<<my_pupil[i].return_direction().toUtf8();
-                 if(!my_pupil[i].return_direction_2().isEmpty()){
-                  stream<<my_pupil[i].return_direction_2().toUtf8();
-                 }
-                 else if (!my_pupil[i].return_direction_3().isEmpty()){
-                  stream<<my_pupil[i].return_direction_3().toUtf8();
-                 }
-               stream<<QString::number(my_pupil[i].return_age());
-                 stream<<my_pupil[i].return_gender().toUtf8();
+                     for( int r = 0; r < ui->tableWidget->verticalHeader()->count(); ++r )
+                     {
+                         strList.clear();
+                         strList << "\""+ui->tableWidget->model()->headerData(r, Qt::Vertical).toString()+"\"";
+                         for( int c = 0; c < ui->tableWidget->horizontalHeader()->count(); ++c )
+                         {
+                                   strList << "\""+ui->tableWidget->model()->data(ui->tableWidget->model()->index(r, c), Qt::DisplayRole).toString()+"\"";
+                         }
 
-             }*/
-
-         /*     foreach(QString s, save_project)
-             {
-                 stream<<s;
-             }*/
-
+                         stream << strList.join( ";" )+"\n";
+                     }
 
          }
-    /*   S33=S33+" "+S34;
-    QMessageBox *msgBox = new QMessageBox(QMessageBox::Information,"Внимание",S33,QMessageBox::Ok);
-      msgBox->setButtonText(QMessageBox::Ok, tr("ОК"));
-      if(msgBox->exec() == QMessageBox::Ok){}}
-      else{
-         QMessageBox *msgBox = new QMessageBox(QMessageBox::Information,"Внимание","Неверно выбран файл!",QMessageBox::Ok);
-         msgBox->setButtonText(QMessageBox::Ok, tr("ОК"));
-         if(msgBox->exec() == QMessageBox::Ok){}
-*/
+
      f.close();
 }
+}
+
+void MainWindow::on_pushButton_delete2_clicked()
+{
+    ui->pushButton_add->show();
+    ui->comboBox_add2->hide();
+    ui->pushButton_delete2->hide();
+}
+
+void MainWindow::on_pushButton_delete3_clicked()
+{
+    ui->pushButton_add_2->show();
+    ui->comboBox_add3->hide();
+     ui->pushButton_delete3->hide();
 }

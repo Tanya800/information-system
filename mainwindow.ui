@@ -61,7 +61,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       <x>970</x>
       <y>10</y>
       <width>257</width>
-      <height>450</height>
+      <height>485</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -230,36 +230,59 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_add2">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
        <item>
-        <property name="text">
-         <string>Хор</string>
-        </property>
+        <widget class="QComboBox" name="comboBox_add2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Хор</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Фортепьяно</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Сольфеджио</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Игра на гитаре</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Вокал</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
-        <property name="text">
-         <string>Фортепьяно</string>
-        </property>
+        <widget class="QPushButton" name="pushButton_delete2">
+         <property name="minimumSize">
+          <size>
+           <width>93</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>93</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Удалить</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Сольфеджио</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Игра на гитаре</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Вокал</string>
-        </property>
-       </item>
-      </widget>
+      </layout>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_add_2">
@@ -269,36 +292,59 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_add3">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
-        <property name="text">
-         <string>Хор</string>
-        </property>
+        <widget class="QComboBox" name="comboBox_add3">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Хор</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Фортепьяно</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Сольфеджио</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Игра на гитаре</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Вокал</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
-        <property name="text">
-         <string>Фортепьяно</string>
-        </property>
+        <widget class="QPushButton" name="pushButton_delete3">
+         <property name="minimumSize">
+          <size>
+           <width>93</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>93</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Удалить</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Сольфеджио</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Игра на гитаре</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Вокал</string>
-        </property>
-       </item>
-      </widget>
+      </layout>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">

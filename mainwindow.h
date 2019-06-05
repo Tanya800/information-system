@@ -58,6 +58,10 @@ private slots:
 
     void on_action_Excel_triggered();
 
+    void on_pushButton_delete2_clicked();
+
+    void on_pushButton_delete3_clicked();
+
 private:
     Ui::MainWindow *ui;
 
