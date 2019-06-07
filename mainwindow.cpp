@@ -117,7 +117,7 @@ void MainWindow::on_pushButton_clicked()
             }}else  ui->statusBar->showMessage("Выберите пол",1500);
         }
 
-
+    if(!new_people.return_name().isEmpty()){
     my_pupil.push_back(new_people);
 
     Item1->setText(my_pupil.back().return_surname().trimmed());
@@ -150,6 +150,7 @@ void MainWindow::on_pushButton_clicked()
     ui->comboBox_add2->hide();
     ui->comboBox_add3->hide();
     ui->pushButton_add_2->hide();
+    }
     }else {
          ui->statusBar->showMessage("Заполните все поля",1500);
     }
@@ -190,12 +191,14 @@ void MainWindow::on_pushButton_clicked()
                 }}else  ui->statusBar->showMessage("Выберите пол",1500);
         }
         else {
+             if(ui->radioButton_m->isChecked()||ui->radioButton_w->isChecked()){
                 if(ui->radioButton_m->isChecked()){    edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_m->text());}
                 else {
                        edit_people.set(ui->lineEdit_f->text(),ui->lineEdit_i->text(),ui->comboBox->currentText(),ui->comboBox_add2->currentText(),ui->comboBox_add3->currentText(),ui->lineEdit_age->text().toInt(),ui->radioButton_w->text());
                 }
+                }else  ui->statusBar->showMessage("Выберите пол",1500);
             }
-
+        if(!edit_people.return_name().isEmpty()){
         my_pupil[choice]=edit_people;
         choice=-1;
         ui->lineEdit_f->clear();
@@ -208,6 +211,7 @@ void MainWindow::on_pushButton_clicked()
         ui->pushButton_delete3->hide();
         ui->comboBox_add3->hide();
         ui->pushButton_add_2->hide();
+        }
         }
         else {
             ui->statusBar->showMessage("Заполните все поля",3000);
@@ -330,12 +334,24 @@ void MainWindow::on_pushButton_find_clicked()
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,2,Item3);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,3,Item4);
         ui->tableWidget->setItem(ui->tableWidget->rowCount() -1,4,Item5);
-       if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find->currentText()==my_pupil[i].return_direction_2()||ui->comboBox_find->currentText()==my_pupil[i].return_direction_3()||ui->comboBox_find->currentText()==my_pupil[i].return_direction().trimmed()||ui->comboBox_find_2->currentText()==my_pupil[i].return_gender())){
-           ui->tableWidget->hideRow(i);
-           n--;
-        }
 
+
+        if(ui->comboBox_find->currentIndex()==0){
+            if(!(ui->lineEdit_i_find->text()==my_pupil[i].return_name()||ui->lineEdit_f_2->text()==my_pupil[i].return_surname()||ui->lineEdit_age_find->text().toInt()==my_pupil[i].return_age()||ui->comboBox_find_2->currentText()==my_pupil[i].return_gender())){
+                ui->tableWidget->hideRow(i);
+                n--;
+            }
+        }
+       else if(my_pupil[i].return_direction_2().isEmpty()&&my_pupil[i].return_direction_3().isEmpty()&&my_pupil[i].return_direction().trimmed()!=ui->comboBox_find->currentText()){
+            ui->tableWidget->hideRow(i);
+            n--;
+        }
+        else if(my_pupil[i].return_direction_2().trimmed()!=ui->comboBox_find->currentText()&&my_pupil[i].return_direction_3().trimmed()!=ui->comboBox_find->currentText()&&my_pupil[i].return_direction().trimmed()!=ui->comboBox_find->currentText()){
+            ui->tableWidget->hideRow(i);
+            n--;
+        }
     }
+
     clear_lineEdit();
     ui->comboBox_find->setCurrentIndex(0);
     ui->comboBox_find_2->setCurrentIndex(0);
@@ -346,7 +362,7 @@ void MainWindow::on_pushButton_find_clicked()
     }else {
            ui->label_table->setText("Результаты поиска");
     }
-    }
+}
 
 }
 
@@ -391,8 +407,8 @@ void MainWindow::on_pushButton_edit_clicked()
 
     else  ui->statusBar->showMessage("Ученик не найден. Попробуйте снова.",3000);
      }
-   }
 
+}
 }
 
 
